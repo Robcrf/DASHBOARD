@@ -67,5 +67,4 @@ Paid Social is the primary driver of volume and reach, while Paid Search is the 
     *   Driving direct conversions.
     *   Capturing high-intent users.
 
-### The Perfect Pitch 🗣️
 > "Paid Social drives scale and volume, while Paid Search delivers efficiency and higher-intent conversions. A balanced strategy leveraging both channels maximizes performance."
