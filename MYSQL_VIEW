@@ -1,0 +1,84 @@
+-- Active: 1726978414272@@127.0.0.1@3306@ads_analytics
+CREATE DATABASE IF NOT EXISTS ADS_ANALYTICS;
+USE ADS_ANALYTICS;
+
+--Cretae a unified table to consolidate data from Facebook Ads, Google Ads, and TikTok Ads
+CREATE TABLE unified_ads (
+    date DATE,
+    channel VARCHAR(50),
+    data_source VARCHAR(50),
+    campaign_id VARCHAR(100),
+    campaign_name VARCHAR(255),
+    impressions INT,
+    clicks INT,
+    spend DECIMAL(10,2),
+    conversions INT
+);
+
+-- Insert data from Facebook Ads, Google Ads, and TikTok Ads into the unified table
+INSERT INTO unified_ads (date, channel, data_source, campaign_id, campaign_name, impressions, clicks, spend, conversions)
+SELECT
+    date,
+    'Paid Social' AS channel,
+    'Facebook Ads' AS data_source,
+    campaign_id,
+    campaign_name,
+    impressions,
+    clicks,
+    spend,
+    conversions
+FROM FACEBOOK.facebook_ads;
+
+
+INSERT INTO unified_ads (date, channel, data_source, campaign_id, campaign_name, impressions, clicks, spend, conversions)
+SELECT
+    date,
+    'Paid Search' AS channel,
+    'Google Ads' AS data_source,
+    campaign_id,
+    campaign_name,
+    impressions,
+    clicks,
+    cost AS spend,
+    conversions
+FROM GOOGLE.google_ads;
+
+
+
+INSERT INTO unified_ads (date, channel, data_source, campaign_id, campaign_name, impressions, clicks, spend, conversions)
+SELECT
+    date,
+    'Paid Social' AS channel,
+    'TikTok Ads' AS data_source,
+    campaign_id,
+    campaign_name,
+    impressions,
+    clicks,
+    cost AS spend,
+    conversions
+FROM TIKTOK.tiktok_ads;
+
+
+-- Verify the unified table
+SELECT COUNT(*) FROM unified_ads;
+
+-- Show sample data from the unified table
+SELECT * FROM unified_ads LIMIT 10;
+
+-- Sum metrics by channel, this is for verification purposes 
+SELECT channel, SUM(impressions) AS total_impressions, SUM(clicks) AS total_clicks, SUM(spend) AS total_spend, SUM(conversions) AS total_conversions
+FROM unified_ads
+GROUP BY channel;
+
+
+-- Define and calculate key performance metrics by channel on POWER BI.
+
+--Calculate overall metrics by channel, Paid Social: means Facebook Ads and TikTok Ads vs Paid Search: means Google Ads
+-- ctr: Click-Through Rate: is used to measure the effectiveness of an online advertising campaign. It is calculated by dividing the number of clicks an ad receives by the number of times the ad is shown (impressions), 
+--cpc: Cost Per Click: is the amount an advertiser pays each time a user clicks on their ad. It is calculated by dividing the total spend by the number of clicks, 
+--cpa: Cost Per Acquisition:is the cost associated with acquiring a customer. It is calculated by dividing the total spend by the number of conversions.
+--conversion_rate:is the percentage of users who take a desired action (conversion) after clicking on an ad. It is calculated by dividing the number of conversions by the number of clicks.
+
+
+
+

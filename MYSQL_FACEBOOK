@@ -1,0 +1,30 @@
+-- Active: 1726978414272@@127.0.0.1@3306@facebook
+
+USE FACEBOOK;
+CREATE TABLE FACEBOOK_ADS (
+    date DATE,
+    campaign_id VARCHAR(100),
+    campaign_name VARCHAR(255),
+    ad_set_id VARCHAR(100),
+    ad_set_name VARCHAR(255),
+    impressions INT,
+    clicks INT,
+    spend DECIMAL(10,2),
+    conversions INT,
+    video_views INT,
+    engagement_rate DECIMAL(6,4),
+    reach INT,
+    frequency DECIMAL(6,4)
+);
+
+SET GLOBAL local_infile = 1;
+LOAD DATA LOCAL INFILE 'C:\\Users\\robhd\\Downloads\\Marketing-Analytics-Assignments\\Marketing-Analytics-Assignments\\tcs-assignment\\01_facebook_ads.csv'
+INTO TABLE FACEBOOK_ADS
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(date, campaign_id, campaign_name, ad_set_id, ad_set_name, impressions, clicks, spend, conversions, video_views, engagement_rate, reach, frequency);
+
+SELECT * FROM FACEBOOK_ADS LIMIT 10;
+

@@ -1,0 +1,28 @@
+USE GOOGLE;
+CREATE TABLE GOOGLE_ADS (
+    date DATE,
+    campaign_id VARCHAR(100),
+    campaign_name VARCHAR(255),
+    ad_group_id VARCHAR(100),
+    ad_group_name VARCHAR(255),
+    impressions INT,
+    clicks INT,
+    cost DECIMAL(10,2),
+    conversions INT,
+    conversion_value DECIMAL(10,2),
+    ctr DECIMAL(6,4),
+    avg_cpc DECIMAL(10,4),
+    quality_score INT,
+    search_impression_share DECIMAL(6,4)
+);
+
+SET GLOBAL local_infile = 1;
+LOAD DATA LOCAL INFILE 'C:\\Users\\robhd\\Downloads\\Marketing-Analytics-Assignments\\Marketing-Analytics-Assignments\\tcs-assignment\\02_google_ads.csv'
+INTO TABLE GOOGLE_ADS
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(date, campaign_id, campaign_name, ad_group_id, ad_group_name, impressions, clicks, cost, conversions, conversion_value, ctr, avg_cpc, quality_score, search_impression_share); 
+
+SELECT * FROM GOOGLE_ADS LIMIT 10;

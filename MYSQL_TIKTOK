@@ -1,0 +1,34 @@
+-- Active: 1726978414272@@127.0.0.1@3306@tiktok
+USE TIKTOK;
+
+
+CREATE TABLE TIKTOK_ADS (
+    date DATE,
+    campaign_id VARCHAR(100),
+    campaign_name VARCHAR(255),
+    adgroup_id VARCHAR(100),
+    adgroup_name VARCHAR(255),
+    impressions INT,
+    clicks INT,
+    cost DECIMAL(10,2),
+    conversions INT,
+    video_views INT,
+    video_watch_25 INT,
+    video_watch_50 INT,
+    video_watch_75 INT,
+    video_watch_100 INT,
+    likes INT,
+    shares INT,
+    comments INT
+);
+
+SET GLOBAL local_infile = 1;
+LOAD DATA LOCAL INFILE 'C:\\Users\\robhd\\Downloads\\Marketing-Analytics-Assignments\\Marketing-Analytics-Assignments\\tcs-assignment\\03_tiktok_ads.csv'
+INTO TABLE TIKTOK_ADS
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(date, campaign_id, campaign_name, adgroup_id, adgroup_name, impressions, clicks, cost, conversions, video_views, video_watch_25, video_watch_50, video_watch_75, video_watch_100, likes, shares, comments);
+
+SELECT * FROM TIKTOK_ADS LIMIT 10;
